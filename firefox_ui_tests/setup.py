@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 PACKAGE_VERSION = '0.3'
 
 deps = [
-    'firefox_puppeteer == 1.0.0',
+    'firefox_puppeteer >= 3.0.0, <4.0.0',
     'firefox_ui_harness == 1.0.0',
 ]
 
