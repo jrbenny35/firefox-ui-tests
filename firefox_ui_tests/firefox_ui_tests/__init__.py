@@ -13,4 +13,4 @@ manifest_functional = os.path.join(root, 'functional', 'manifest.ini')
 manifest_update_direct = os.path.join(root, 'update', 'direct', 'manifest.ini')
 manifest_update_fallback = os.path.join(root, 'update', 'fallback', 'manifest.ini')
 
-resources = os.path.join(os.path.dirname(root), 'resources')
+resources = os.path.join(root, 'resources')

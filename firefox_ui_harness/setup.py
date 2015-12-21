@@ -38,11 +38,7 @@ setup(name='firefox_ui_harness',
       install_requires=read('requirements.txt').splitlines(),
       entry_points="""
         [console_scripts]
-        firefox-ui-functional = firefox_ui_harness.cli_functional:cli_functional
-        firefox-ui-update = firefox_ui_harness.cli_update:cli_update
-
-        # Keep for mozharness backward compatibility. Can be removed once mozharness
-        # has been updated.
-        firefox-ui-tests = firefox_ui_harness.cli_functional:cli_functional
+        firefox-ui-functional = firefox_ui_harness.cli_functional:cli
+        firefox-ui-update = firefox_ui_harness.cli_update:cli
       """,
       )

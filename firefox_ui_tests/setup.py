@@ -30,6 +30,15 @@ setup(name='firefox_ui_tests',
       license='MPL 2.0',
       packages=find_packages(),
       include_package_data=True,
+      package_data={
+          '': [
+              '*.html',
+              '*.ico',
+              '*.ini',
+              '*.jpg',
+              '*.js',
+          ]
+      },
       zip_safe=False,
       install_requires=deps,
       )

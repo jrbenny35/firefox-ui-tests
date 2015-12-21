@@ -1,2 +1,2 @@
 exclude MANIFEST.in
-recursive-include resources *
+recursive-include firefox_ui_tests *
