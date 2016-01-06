@@ -8,7 +8,7 @@ PACKAGE_VERSION = '0.3.1'
 
 deps = [
     'firefox-puppeteer >= 3.1.0, <4.0.0',
-    'firefox-ui-harness == 1.1.1',
+    'firefox-ui-harness == 1.1.2',
 ]
 
 setup(name='firefox-ui-tests',
