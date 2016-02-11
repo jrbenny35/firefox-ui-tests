@@ -40,7 +40,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
     def setUp(self):
         FirefoxTestCase.setUp(self)
         safe_browsing_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
-        files_location = safe_browsing_path
+        self.files_location = safe_browsing_path
 
     def test_safe_browsing(self):
         if sys.platform.startswith('win32'):
@@ -52,18 +52,18 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         for file in self.file_names:
             if self.assertTrue(
                     Wait(self.marionette, timeout=60).until(
-                        lambda _: os.path.exists(os.path.join(self.filesLocation, file)))):
+                        lambda _: os.path.exists(os.path.join(self.files_location, file)))):
                 self.verify_tracking_protection_existence()
 
     def verify_win_files_existence(self):
         for file in self.win_file_names:
             if self.assertTrue(
                     Wait(self.marionette, timeout=60).until(
-                        lambda _: os.path.exists(os.path.join(self.filesLocation, file)))):
+                        lambda _: os.path.exists(os.path.join(self.files_location, file)))):
                 self.verify_tracking_protection_existence()
 
     def verify_tracking_protection_existence(self):
         for file in self.tracking_protection:
             self.assertTrue(
                 Wait(self.marionette, timeout=60).until(
-                    lambda _: os.path.exists(os.path.join(self.filesLocation, file))))
+                    lambda _: os.path.exists(os.path.join(self.files_location, file))))
