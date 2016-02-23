@@ -8,6 +8,7 @@ from firefox_puppeteer.testcases import FirefoxTestCase
 
 from firefox_puppeteer.ui.browser.window import BrowserWindow
 
+
 class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
     data = [
@@ -85,4 +86,3 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
                     self.assertTrue(
                         Wait(self.marionette, timeout=300).until(
                             lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
-
