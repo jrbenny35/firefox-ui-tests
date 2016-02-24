@@ -2,10 +2,7 @@ import os
 import sys
 
 from marionette_driver import By, Wait
-
 from firefox_puppeteer.testcases import FirefoxTestCase
-
-from firefox_puppeteer.ui.browser.window import BrowserWindow
 
 
 class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
@@ -15,15 +12,15 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
             'platform': ['linux', 'win', 'darwin'],
             'files': [
                 # Phishing
-                "goog-phish-shavar.cache",
-                "goog-phish-shavar.pset",
-                "goog-phish-shavar.sbstore",
-                "goog-malware-shavar.cache",
-                "goog-malware-shavar.pset",
-                "goog-malware-shavar.sbstore",
                 "goog-badbinurl-shavar.cache",
                 "goog-badbinurl-shavar.pset",
                 "goog-badbinurl-shavar.sbstore",
+                "goog-malware-shavar.cache",
+                "goog-malware-shavar.pset",
+                "goog-malware-shavar.sbstore",
+                "goog-phish-shavar.cache",
+                "goog-phish-shavar.pset",
+                "goog-phish-shavar.sbstore",
                 "goog-unwanted-shavar.cache",
                 "goog-unwanted-shavar.pset",
                 "goog-unwanted-shavar.sbstore",
@@ -47,31 +44,31 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         }
     ]
 
+    browser_prefs = {
+        'browser.safebrowsing.downloads.enabled': 'true',
+        'browser.safebrowsing.downloads.remote.enabled': 'true',
+        'browser.safebrowsing.enabled': 'true',
+        'browser.safebrowsing.malware.enabled': 'true',
+        'browser.safebrowsing.provider.google.nextupdatetime': 1,
+        'browser.safebrowsing.provider.mozilla.nextupdatetime': 1,
+        'privacy.trackingprotection.pbmode.enabled': 'true'
+    }
+
     def setUp(self):
         FirefoxTestCase.setUp(self)
 
         # Restart Browser
         self.restart()
 
-        # Set Browser URL
-        self.test_url = 'https://mozqa.com'
-
         # Set Browser Preferences
-        self.prefs.set_pref('browser.safebrowsing.provider.google.nextupdatetime', 1)
-        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
-        self.prefs.set_pref('browser.safebrowsing.enabled', 'true')
-        self.prefs.set_pref('browser.safebrowsing.malware.enabled', 'true')
-        self.prefs.set_pref('browser.safebrowsing.downloads.enabled', 'true')
-        self.prefs.set_pref('browser.safebrowsing.downloads.remote.enabled', 'true')
-        self.prefs.set_pref('privacy.trackingprotection.pbmode.enabled', 'true')
+        for item, value in self.browser_prefs.items():
+            self.prefs.set_pref(item, value)
 
-        # Set variable to join path
+        # Set Variable to tmp safebrowsing directory
         self.sb_files_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
 
     def test_safe_browsing(self):
-        with self.marionette.using_context('content'):
-            self.marionette.navigate(self.test_url)
-
+        
         if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
             self.verify_files_existence()
         elif sys.platform.startswith('win32'):
@@ -83,7 +80,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
             if ('linux' or 'darwin') in data['platform']:
                 for item in data['files']:
                     self.assertTrue(
-                        Wait(self.marionette, timeout=300).until(
+                        Wait(self.marionette, timeout=30).until(
                             lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
 
     # Test windows specific files
@@ -92,5 +89,5 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
             if 'win' in data['platform']:
                 for item in data['files']:
                     self.assertTrue(
-                        Wait(self.marionette, timeout=300).until(
+                        Wait(self.marionette, timeout=30).until(
                             lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
