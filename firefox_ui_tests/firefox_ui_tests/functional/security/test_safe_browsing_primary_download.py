@@ -69,7 +69,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         with self.marionette.using_context('content'):
             self.marionette.navigate(self.test_url)
 
-        if sys.platform.startswith('linux'):
+        if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
             self.verify_files_existence()
         elif sys.platform.startswith('win32'):
             self.verify_win_files_existence()
@@ -77,7 +77,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
     # Test all besides windows specific
     def verify_files_existence(self):
         for data in self.data:
-            if 'linux' in data['platform']:
+            if ('linux' or 'darwin') in data['platform']:
                 for item in data['files']:
                     self.assertTrue(
                         Wait(self.marionette, timeout=300).until(
