@@ -24,6 +24,9 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
                 "goog-badbinurl-shavar.cache",
                 "goog-badbinurl-shavar.pset",
                 "goog-badbinurl-shavar.sbstore",
+                "goog-unwanted-shavar.cache",
+                "goog-unwanted-shavar.pset",
+                "goog-unwanted-shavar.sbstore",
 
                 # Tracking Protections
                 "mozstd-track-digest256.cache",
