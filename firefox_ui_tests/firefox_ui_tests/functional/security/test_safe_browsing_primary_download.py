@@ -48,12 +48,17 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
     def setUp(self):
         FirefoxTestCase.setUp(self)
 
+        # Restart Browser
+        self.restart()
+
         # Set Browser URL
         self.test_url = 'https://mozqa.com'
 
         # Set Browser Preferences
         self.prefs.set_pref('browser.safebrowsing.provider.google.lastupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.provider.google.nextupdatetime', 1)
+        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
+        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.enabled', 'true')
         self.prefs.set_pref('browser.safebrowsing.malware.enabled', 'true')
 
