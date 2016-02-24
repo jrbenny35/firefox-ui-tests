@@ -59,7 +59,6 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         # Set Browser Preferences
         self.prefs.set_pref('browser.safebrowsing.provider.google.nextupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
-        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.lastupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.enabled', 'true')
         self.prefs.set_pref('browser.safebrowsing.malware.enabled', 'true')
         self.prefs.set_pref('browser.safebrowsing.downloads.enabled', 'true')
