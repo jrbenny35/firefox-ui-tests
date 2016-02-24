@@ -68,11 +68,24 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         self.sb_files_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
 
     def test_safe_browsing(self):
-        
-        if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
-            self.verify_files_existence()
-        elif sys.platform.startswith('win32'):
-            self.verify_win_files_existence()
+        for data in self.data:
+            if sys.platform.startswith('linux') and data in data['platform'] is 'linux':
+                print('Linux')
+                for item in data['files']:
+                    self.assertTrue(
+                        Wait(self.marionette, timeout=30).until(
+                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
+            else:
+                for item in data['files']:
+                    self.assertTrue(
+                        Wait(self.marionette, timeout=30).until(
+                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
+
+
+        #if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+        #    self.verify_files_existence()
+        #elif sys.platform.startswith('win32'):
+        #    self.verify_win_files_existence()
 
     # Test all besides windows specific
     def verify_files_existence(self):
