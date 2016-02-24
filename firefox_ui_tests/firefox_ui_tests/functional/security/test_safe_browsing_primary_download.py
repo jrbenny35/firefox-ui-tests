@@ -2,7 +2,6 @@ import os
 import sys
 
 from marionette_driver import By, Wait
-from marionette.marionette_test import skip_if_e10s
 
 from firefox_puppeteer.testcases import FirefoxTestCase
 
@@ -55,12 +54,14 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         self.test_url = 'https://mozqa.com'
 
         # Set Browser Preferences
-        self.prefs.set_pref('browser.safebrowsing.provider.google.lastupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.provider.google.nextupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
-        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.nextupdatetime', 1)
+        self.prefs.set_pref('browser.safebrowsing.provider.mozilla.lastupdatetime', 1)
         self.prefs.set_pref('browser.safebrowsing.enabled', 'true')
         self.prefs.set_pref('browser.safebrowsing.malware.enabled', 'true')
+        self.prefs.set_pref('browser.safebrowsing.downloads.enabled', 'true')
+        self.prefs.set_pref('browser.safebrowsing.downloads.remote.enabled', 'true')
+        self.prefs.set_pref('privacy.trackingprotection.pbmode.enabled', 'true')
 
         # Set variable to join path
         self.sb_files_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
