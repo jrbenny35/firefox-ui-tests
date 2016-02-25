@@ -9,7 +9,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
     data = [
         {
-            'platform': ['linux', 'win', 'darwin'],
+            'platform': ['linux2', 'win32', 'darwin'],
             'files': [
                 # Phishing
                 "goog-badbinurl-shavar.cache",
@@ -35,7 +35,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
                 ]
             },
         {
-            'platform': ['win'],
+            'platform': ['win32'],
             'files': [
                 "goog-downloadwhite-digest256.cache",
                 "goog-downloadwhite-digest256.pset",
@@ -69,13 +69,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
     def test_safe_browsing(self):
         for data in self.data:
-            if sys.platform.startswith('linux') and data in data['platform'] is 'linux':
-                print('Linux')
-                for item in data['files']:
-                    self.assertTrue(
-                        Wait(self.marionette, timeout=30).until(
-                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
-            else:
+            if sys.platform in data['platform']:
                 for item in data['files']:
                     self.assertTrue(
                         Wait(self.marionette, timeout=30).until(
