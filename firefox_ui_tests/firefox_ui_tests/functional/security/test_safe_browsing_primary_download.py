@@ -9,7 +9,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
     data = [
         {
-            'platform': ['linux2', 'win32', 'darwin'],
+            'platform_list': ['linux2', 'win32', 'darwin'],
             'files': [
                 # Phishing
                 "goog-badbinurl-shavar.cache",
@@ -35,7 +35,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
                 ]
             },
         {
-            'platform': ['win32'],
+            'platform_list': ['win32'],
             'files': [
                 "goog-downloadwhite-digest256.cache",
                 "goog-downloadwhite-digest256.pset",
@@ -69,32 +69,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
     def test_safe_browsing(self):
         for data in self.data:
-            if sys.platform in data['platform']:
+            if sys.platform in data['platform_list']:
                 for item in data['files']:
-                    self.assertTrue(
-                        Wait(self.marionette, timeout=30).until(
-                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
-
-
-        #if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
-        #    self.verify_files_existence()
-        #elif sys.platform.startswith('win32'):
-        #    self.verify_win_files_existence()
-
-    # Test all besides windows specific
-    def verify_files_existence(self):
-        for data in self.data:
-            if ('linux' or 'darwin') in data['platform']:
-                for item in data['files']:
-                    self.assertTrue(
-                        Wait(self.marionette, timeout=30).until(
-                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
-
-    # Test windows specific files
-    def verify_win_files_existence(self):
-        for data in self.data:
-            if 'win' in data['platform']:
-                for item in data['files']:
-                    self.assertTrue(
-                        Wait(self.marionette, timeout=30).until(
-                            lambda _: os.path.exists(os.path.join(self.sb_files_path, item))))
+                    Wait(self.marionette, timeout=self.browser.timeout_page_load).until(
+                        lambda _: os.path.exists(os.path.join(self.sb_files_path, item)))
