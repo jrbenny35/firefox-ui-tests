@@ -1,7 +1,7 @@
 import os
 import sys
 
-from marionette_driver import By, Wait
+from marionette_driver import Wait
 from firefox_puppeteer.testcases import FirefoxTestCase
 
 
