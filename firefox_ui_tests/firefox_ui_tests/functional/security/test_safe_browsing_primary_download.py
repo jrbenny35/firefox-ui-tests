@@ -67,7 +67,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         # Set Variable to tmp safebrowsing directory
         self.sb_files_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
 
-    def test_safe_browsing(self):
+    def test_safe_browsing_initial_download(self):
         for data in self.test_data:
             if sys.platform in data['platforms']:
                 for item in data['files']:
