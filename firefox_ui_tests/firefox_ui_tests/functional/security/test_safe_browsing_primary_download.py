@@ -7,9 +7,9 @@ from firefox_puppeteer.testcases import FirefoxTestCase
 
 class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
 
-    data = [
+    test_data = [
         {
-            'platform_list': ['linux2', 'win32', 'darwin'],
+            'platforms': ['linux2', 'win32', 'darwin'],
             'files': [
                 # Phishing
                 "goog-badbinurl-shavar.cache",
@@ -35,7 +35,7 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
                 ]
             },
         {
-            'platform_list': ['win32'],
+            'platforms': ['win32'],
             'files': [
                 "goog-downloadwhite-digest256.cache",
                 "goog-downloadwhite-digest256.pset",
@@ -68,8 +68,8 @@ class TestSafeBrowsingPrimaryDownload(FirefoxTestCase):
         self.sb_files_path = os.path.join(self.marionette.instance.profile.profile, 'safebrowsing')
 
     def test_safe_browsing(self):
-        for data in self.data:
-            if sys.platform in data['platform_list']:
+        for data in self.test_data:
+            if sys.platform in data['platforms']:
                 for item in data['files']:
                     Wait(self.marionette, timeout=self.browser.timeout_page_load).until(
                         lambda _: os.path.exists(os.path.join(self.sb_files_path, item)))
